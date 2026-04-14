@@ -1,4 +1,4 @@
-# Progetto ST: pipeline di analisi del codice
+# Progetto Programmazione Object Oriented: pipeline di analisi del codice
 [![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-highlight.svg)](https://sonarcloud.io/summary/new_code?id=OOP2026_TemplateOOP2026)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=OOP2026_TemplateOOP2026&metric=alert_status)](https://sonarcloud.io/project/configuration?id=OOP2026_TemplateOOP2026)
