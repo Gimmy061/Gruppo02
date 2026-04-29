@@ -1,17 +1,29 @@
 package model;
 
-import java.util.ArrayList;
-
-public class Utente {
-    private String login;
+public abstract class Utente {
+    public  String nome, cognome, email;
     private String password;
 
-    public Utente(String login, String password) {
-        this.login = login;
-        this.password = password;
+    public Utente(String nome, String cognome, String email, String password){
+        this.nome=nome;
+        this.cognome=cognome;
+        this.email=email;
+        this.password=password;
     }
 
-    public boolean login(String login, String password) {
-        return ( login.equals(this.login) && password.equals(this.password));
+    public String getNome(){
+        return nome;
+    }
+    public String getCognome(){
+        return cognome;
+    }
+    public String setEmail(String email){
+        this.email=email;
+    }
+    public String getEmail(){
+        return email;
+    }
+    public String setPassword(String password){
+        this.password=password;
     }
 }
