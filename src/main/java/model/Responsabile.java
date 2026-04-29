@@ -6,14 +6,12 @@ public class Responsabile extends Docente{
     private ArrayList<Lezione>LezioniImpostate;
     public Responsabile(String nome, String cognome, String email, String password){
         super(nome, cognome, email, password);
+        LezioniImpostate= new ArrayList<>();
     }
     public void addLezione(Lezione lezione) {
-        this.lezioniImpostate.add(lezione);
+        this.LezioniImpostate.add(lezione);
     }
-    public List<Lezione> getLezioni() {
-        return lezioni;
-    }
-    public void setLezioni(List<Lezione> lezioni) {
-        this.lezioni = lezioni;
+    public ArrayList<Lezione> getLezione() {
+        return LezioniImpostate;
     }
 }

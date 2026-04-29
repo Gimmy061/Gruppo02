@@ -17,13 +17,13 @@ public abstract class Utente {
     public String getCognome(){
         return cognome;
     }
-    public String setEmail(String email){
+    public void setEmail(String email){
         this.email=email;
     }
     public String getEmail(){
         return email;
     }
-    public String setPassword(String password){
+    public void setPassword(String password){
         this.password=password;
     }
 }

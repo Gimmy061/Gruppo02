@@ -1,12 +1,12 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Aula{
     private String nome;
 
-    private List<Lezione> lezioni;
+    private ArrayList<Lezione> lezioni;
 
     public Aula(String nome){
         this.nome = nome;
@@ -19,10 +19,10 @@ public class Aula{
     public void setNome(String nome){
         this.nome = nome;
     }
-    public List<Lezione> getLezioni(){
+    public ArrayList<Lezione> getLezioni(){
         return lezioni;
     }
-    public void setLezioni(List<Lezione> lezioni){
+    public void setLezioni(ArrayList<Lezione> lezioni){
         this.lezioni = lezioni;
     }
     public void addLezione(Lezione lezione){

@@ -18,19 +18,19 @@ public class Lezione {
         this.orarioLezioni=orarioLezioni;
     }
 
-    public String setGiornoSettimana(String giornoSettimana) {
+    public void setGiornoSettimana(String giornoSettimana) {
         GiornoSettimana = giornoSettimana;
     }
     public String getGiornoSettimana(){
         return GiornoSettimana;
     }
-    public String setOrainizio(String orainizio){
+    public void setOrainizio(String orainizio){
         Orainizio=orainizio;
     }
     public String getOrainizio(){
         return Orainizio;
     }
-    public String setOrafine(String orafine){
+    public void setOrafine(String orafine){
         Orafine=orafine;
     }
     public String getOrafine(){
