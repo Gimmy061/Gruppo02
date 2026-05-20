@@ -22,9 +22,6 @@ public class Aula{
     public ArrayList<Lezione> getLezioni(){
         return lezioni;
     }
-    public void setLezioni(ArrayList<Lezione> lezioni){
-        this.lezioni = lezioni;
-    }
     public void addLezione(Lezione lezione){
         this.lezioni.add(lezione);
     }

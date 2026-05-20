@@ -8,4 +8,7 @@ public class Insegnamento {
         this.CFU = CFU;
         this.annoCorso = annoCorso;
     }
+    public String getNome() {return nome;}
+    public int getCFU(){return CFU;}
+    public int getAnnoCorso(){return annoCorso;}
 }
