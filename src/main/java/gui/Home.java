@@ -22,7 +22,7 @@ public class Home extends JFrame {
         this.setTitle("ACCESSO");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setSize(400, 300); 
+        this.setSize(400, 300);
 
         loginButton.addActionListener(e -> {
 

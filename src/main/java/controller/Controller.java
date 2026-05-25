@@ -40,4 +40,21 @@ public class Controller {
 	public Utente getUtenteLoggato() {
 		return utenteLoggato;
 	}
+	public int getNumeroInsegnamenti() { return insegnamenti.size(); }
+	public int getNumeroAule() { return aule.size(); }
+	public int getNumeroLezioni() { return lezioni.size(); }
+	public int getNumeroRichiesteInAttesa() {
+		int count = 0;
+		for (RichiestaSpostamento r : richieste) if (r.getStato().equals("In attesa")) count++;
+		return count;
+	}
+	public ArrayList<Insegnamento> getInsegnamenti() {
+		return insegnamenti;
+	}
+	public ArrayList<Aula> getAule() {
+		return aule;
+	}
+	public ArrayList<Lezione> getTutteLezioni() {
+		return lezioni;
+	}
 }
