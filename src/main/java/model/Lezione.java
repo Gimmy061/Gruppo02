@@ -18,6 +18,10 @@ public class Lezione {
         this.orarioLezioni=orarioLezioni;
     }
 
+    public Aula getAula() {
+        return this.aula;
+    }
+
     public void setGiornoSettimana(String giornoSettimana) {
         GiornoSettimana = giornoSettimana;
     }

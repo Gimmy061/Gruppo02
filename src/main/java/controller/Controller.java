@@ -40,21 +40,55 @@ public class Controller {
 	public Utente getUtenteLoggato() {
 		return utenteLoggato;
 	}
-	public int getNumeroInsegnamenti() { return insegnamenti.size(); }
-	public int getNumeroAule() { return aule.size(); }
-	public int getNumeroLezioni() { return lezioni.size(); }
+
+	public int getNumeroInsegnamenti() {
+		return insegnamenti.size();
+	}
+
+	public int getNumeroAule() {
+		return aule.size();
+	}
+
+	public int getNumeroLezioni() {
+		return lezioni.size();
+	}
+
 	public int getNumeroRichiesteInAttesa() {
 		int count = 0;
 		for (RichiestaSpostamento r : richieste) if (r.getStato().equals("In attesa")) count++;
 		return count;
 	}
+
 	public ArrayList<Insegnamento> getInsegnamenti() {
 		return insegnamenti;
 	}
+
 	public ArrayList<Aula> getAule() {
+
 		return aule;
 	}
+
 	public ArrayList<Lezione> getTutteLezioni() {
+
 		return lezioni;
+	}
+
+	public ArrayList<String> rilevaConflitti() {
+		ArrayList<String> conflittiTrovati = new ArrayList<>();
+
+		for (int i = 0; i < lezioni.size(); i++) {
+			for (int j = i + 1; j < lezioni.size(); j++) {
+				Lezione l1 = lezioni.get(i);
+				Lezione l2 = lezioni.get(j);
+				if (l1.getGiornoSettimana().equals(l2.getGiornoSettimana()) &&
+						l1.getOrainizio().equals(l2.getOrainizio())) {
+				}
+				if (l1.getAula().getNome().equals(l2.getAula().getNome())) {
+					conflittiTrovati.add("Aula " + l1.getAula().getNome() + " occupata due volte " +
+							l1.getGiornoSettimana() + " " + l1.getOrainizio());
+				}
+			}
+		}
+		return conflittiTrovati;
 	}
 }

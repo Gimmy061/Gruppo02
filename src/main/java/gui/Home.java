@@ -44,13 +44,13 @@ public class Home extends JFrame {
                     this.dispose();
 
                 } else if(utenteLoggato instanceof Responsabile){
-                    RESPONSABILE schermataResponsabile = new RESPONSABILE(controller);
-                    schermataResponsabile.setVisible(true);
+                    RESPONSABILE schermataRESPONSABILE= new RESPONSABILE(controller);
+                    schermataRESPONSABILE.setVisible(true);
 
                     this.dispose();
                 } else if (utenteLoggato instanceof Docente) {
-                    DOCENTE schermataDocenti = new DOCENTE(controller);
-                    schermataDocenti.setVisible(true);
+                    DOCENTE schermataDOCENTE = new DOCENTE(controller);
+                    schermataDOCENTE.setVisible(true);
 
                     this.dispose();
                 }
@@ -62,7 +62,6 @@ public class Home extends JFrame {
         });
     }
 
-    // (La parentesi "volante" che c'era qui l'ho tolta!)
 
     public static void main(String[] args) {
         Home schermataHome = new Home();
