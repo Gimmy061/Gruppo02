@@ -7,9 +7,9 @@ public class RichiestaSpostamento {
     private String NuovaOraFine;
     private String stato;
 
-    public RichiestaSpostamento(Lezione lezionedaSpostare, String NuovoGironoLezione, String NuovaOraInizio, String NuovaOraFine){
+    public RichiestaSpostamento(Lezione lezionedaSpostare, String NuovoGiornoLezione, String NuovaOraInizio, String NuovaOraFine){
         this.lezionedaSpostare=lezionedaSpostare;
-        this.NuovoGiornoLezione=NuovoGironoLezione;
+        this.NuovoGiornoLezione=NuovoGiornoLezione;
         this.NuovaOraInizio=NuovaOraInizio;
         this.NuovaOraFine=NuovaOraFine;
         this.stato="In attesa";

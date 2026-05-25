@@ -11,6 +11,5 @@ public class Vincolo  {
     }
     public String getVincoloGiornoSettimana(){return VincoloGiornoSettimana;}
     public String getVincoloOraInizio(){return VincoloOraInizio;}
-
     public String getVincoloOraFine(){return VincoloOraFine;}
 }

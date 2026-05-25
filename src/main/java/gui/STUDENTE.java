@@ -5,7 +5,6 @@ import controller.Controller;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-
 public class STUDENTE extends JFrame{
     private Controller controller;
     private JTable tabellaOrario;
@@ -22,23 +21,14 @@ public class STUDENTE extends JFrame{
         tabellaOrario.setModel(model);
         tabellaOrario.setRowHeight(40);
     }
-
     private void createUIComponents() {
-        // Creiamo la tabella a mano per accontentarlo
         tabellaOrario = new JTable();
         scrollPane1 = new JScrollPane();
-        // Se si lamenta anche dello scrollPane, de-commenta la riga sotto:
-        // scrollPane1 = new JScrollPane();
     }
 
     public static void main(String[] args) {
-        // 1. Creiamo un controller fittizio, altrimenti il costruttore va in errore
         controller.Controller fintoController = new controller.Controller();
-
-
         STUDENTE finestraTest = new STUDENTE(fintoController);
-
-
         finestraTest.setVisible(true);
     }
 }

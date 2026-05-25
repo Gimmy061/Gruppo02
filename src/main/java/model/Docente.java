@@ -9,7 +9,8 @@ public class Docente extends Utente{
 
     public Docente(String nome, String cognome, String email, String password) {
         super(nome, cognome, email, password);
-        insegnamenti=new ArrayList<>();
+        this.insegnamenti=new ArrayList<>();
+        this.vincoli=new ArrayList<>();
     }
 
     public boolean aggiungiInsegnamento(Insegnamento insegnamento) {
@@ -34,7 +35,14 @@ public class Docente extends Utente{
     public void rimuoviVincolo(Vincolo vincolo){
         vincoli.remove(vincolo);
     }
+    public java.util.ArrayList<Vincolo> getVincoli(){
+        return this.vincoli;
+    }
+    public java.util.ArrayList<Insegnamento> getInsegnamenti() {
+        return this.insegnamenti;
+    }
 }
+
 
 
 

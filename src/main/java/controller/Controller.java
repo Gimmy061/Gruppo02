@@ -14,6 +14,8 @@ public class Controller {
 	private ArrayList<Aula> aule = new ArrayList<>();
 	private ArrayList<RichiestaSpostamento> richieste = new ArrayList<>();
 	private Utente utenteLoggato = null;
+	private ArrayList<RichiestaSpostamento> richiesteSpostamento = new ArrayList<>();
+
 
 	public boolean effettuaLogin(String email, String password) {
 		for (Responsabile r : responsabili) {
@@ -80,15 +82,40 @@ public class Controller {
 			for (int j = i + 1; j < lezioni.size(); j++) {
 				Lezione l1 = lezioni.get(i);
 				Lezione l2 = lezioni.get(j);
-				if (l1.getGiornoSettimana().equals(l2.getGiornoSettimana()) &&
-						l1.getOrainizio().equals(l2.getOrainizio())) {
+				if (l1.getGiornoSettimana().equals(l2.getGiornoSettimana()) && l1.getOrainizio().equals(l2.getOrainizio())) {
 				}
 				if (l1.getAula().getNome().equals(l2.getAula().getNome())) {
 					conflittiTrovati.add("Aula " + l1.getAula().getNome() + " occupata due volte " +
 							l1.getGiornoSettimana() + " " + l1.getOrainizio());
 				}
+				if (l1.getInsegnamento().getDocente().getEmail().equals(l2.getInsegnamento().getDocente().getEmail())) {
+					conflittiTrovati.add("Prof. " + l1.getInsegnamento().getDocente().getCognome() +
+							" ha due lezioni sovrapposte " + l1.getGiornoSettimana() + " " + l1.getOrainizio());
+				}
 			}
 		}
 		return conflittiTrovati;
+	}
+
+	public void setUtenteLoggato(Utente utente) {
+		this.utenteLoggato = utente;
+	}
+
+	public void aggiungiRichiestaSpostamento(RichiestaSpostamento richiesta) {
+		richiesteSpostamento.add(richiesta);
+	}
+
+	public ArrayList<RichiestaSpostamento> getRichiesteSpostamento() {
+		return richiesteSpostamento;
+	}
+
+	public ArrayList<Lezione> getLezioniDelDocente(Docente prof) {
+		ArrayList<Lezione> lezioniProf = new ArrayList<>();
+		for (Lezione l : this.lezioni) {
+			if (l.getInsegnamento().getDocente().getEmail().equals(prof.getEmail())) {
+				lezioniProf.add(l);
+			}
+		}
+		return lezioniProf;
 	}
 }

@@ -4,7 +4,7 @@ import javax.swing.*;
 import controller.Controller;
 import model.Docente;
 import model.Responsabile;
-import model.Studente; // Ricordati di importare la classe Studente
+import model.Studente;
 import model.Utente;
 
 public class Home extends JFrame {
@@ -64,6 +64,7 @@ public class Home extends JFrame {
 
 
     public static void main(String[] args) {
+        Controller c= new Controller();
         Home schermataHome = new Home();
         schermataHome.setVisible(true);
     }
