@@ -2,14 +2,15 @@ package model;
 
 import java.util.ArrayList;
 
-
 public class OrarioLezioni {
-    private ArrayList<OrarioLezioni> orarioLezioni;
-    public OrarioLezioni(){
-        this.orarioLezioni=new ArrayList<>();
+    private ArrayList<Lezione> lezioni;
+    public OrarioLezioni() {
+        this.lezioni = new ArrayList<>();
     }
-
-    public ArrayList<OrarioLezioni> getOrarioLezioni() {
-        return orarioLezioni;
+    public ArrayList<Lezione> getLezioni() {
+        return lezioni;
+    }
+    public void addLezione(Lezione lezione) {
+        this.lezioni.add(lezione);
     }
 }

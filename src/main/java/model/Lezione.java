@@ -8,7 +8,7 @@ public class Lezione {
     public Insegnamento insegnamento;
     public OrarioLezioni orarioLezioni;
 
-    public Lezione(String GiornoSettimana, String Orainizio, String Orafine, Aula aula, Responsabile responsabile, OrarioLezioni orarioLezioni){
+    public Lezione(String GiornoSettimana, String Orainizio, String Orafine, Aula aula, Responsabile responsabile,Insegnamento insegnamento, OrarioLezioni orarioLezioni){
         this.GiornoSettimana =GiornoSettimana;
         this.Orainizio=Orainizio;
         this.Orafine=Orafine;
