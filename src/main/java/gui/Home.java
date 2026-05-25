@@ -1,19 +1,68 @@
 package gui;
 
 import javax.swing.*;
-import java.awt.*;
 import controller.Controller;
+import model.Docente;
+import model.Responsabile;
+import model.Studente; // Ricordati di importare la classe Studente
+import model.Utente;
 
 public class Home extends JFrame {
     private Controller controller;
     private JPanel panelHome;
-    private JTextField textField1;
+    private JTextField textField2; // Immagino sia per l'email
     private JPasswordField passwordField1;
-    private JTextArea textArea1;
-    private JButton button1;
+    private JButton loginButton;
     private JPanel panelHome0;
-    private JButton button2;
+    private JTextField accediConLeTueTextField;
 
+    public Home() {
+        this.controller = new Controller();
+        this.setContentPane(panelHome);
+        this.setTitle("ACCESSO");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setSize(400, 300); 
+
+        loginButton.addActionListener(e -> {
+
+            String email = this.textField2.getText(); // Sostituisci con textArea1 se serve
+            String password = String.valueOf(this.passwordField1.getPassword());
+
+
+            if (controller.effettuaLogin(email, password)) {
+
+
+                Utente utenteLoggato = controller.getUtenteLoggato();
+
+                if (utenteLoggato instanceof Studente) {
+
+
+                    STUDENTE schermataStudente = new STUDENTE(controller);
+                    schermataStudente.setVisible(true);
+
+                    this.dispose();
+
+                } else if(utenteLoggato instanceof Responsabile){
+                    RESPONSABILE schermataResponsabile = new RESPONSABILE(controller);
+                    schermataResponsabile.setVisible(true);
+
+                    this.dispose();
+                } else if (utenteLoggato instanceof Docente) {
+                    DOCENTE schermataDocenti = new DOCENTE(controller);
+                    schermataDocenti.setVisible(true);
+
+                    this.dispose();
+                }
+
+            } else {
+                // 5. Se il controller restituisce false, le credenziali sono errate
+                JOptionPane.showMessageDialog(this, "Email o password errati!", "Errore Login", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+    // (La parentesi "volante" che c'era qui l'ho tolta!)
 
     public static void main(String[] args) {
         Home schermataHome = new Home();

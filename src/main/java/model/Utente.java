@@ -26,4 +26,12 @@ public abstract class Utente {
     public void setPassword(String password){
         this.password=password;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean login (String email, String password){
+        return(email.equals(this.email) && password.equals(this.password));
+    }
 }

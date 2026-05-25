@@ -3,12 +3,11 @@ package gui;
 import javax.swing.*;
 import controller.Controller;
 
-public class STUDENTE extends JFrame{
-    private JTextArea benvenutoStudenteQuiTroveraiTextArea;
+public class DOCENTE extends JFrame{
     private Controller controller;
 
-
-    public STUDENTE(Controller controller) {
+    public DOCENTE(Controller controller) {
         this.controller = controller;
     }
+
 }
