@@ -17,7 +17,13 @@ public class Lezione {
         this.insegnamento=insegnamento;
         this.orarioLezioni=orarioLezioni;
     }
-
+    public Lezione (Insegnamento insegnamento,String giornoSettimana,String oraInizio, String oraFine, Aula aula){
+        this.GiornoSettimana =giornoSettimana;
+        this.Orainizio=oraInizio;
+        this.Orafine=oraFine;
+        this.aula=aula;
+        this.insegnamento=insegnamento;
+    }
     public Aula getAula() {
         return this.aula;
     }

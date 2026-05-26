@@ -71,21 +71,27 @@ public class DOCENTE extends JFrame {
     }
     private void apriPopupAggiungiVincolo() {
         JComboBox<String> comboGiorno = new JComboBox<>(new String[]{"Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"});
-        JComboBox<String> comboInizio = new JComboBox<>(new String[]{"08:00", "10:00", "12:00", "14:00", "16:00", "18:00"});
-        JComboBox<String> comboFine = new JComboBox<>(new String[]{"10:00", "12:00", "14:00", "16:00", "18:00", "20:00"});
+        String[]orariSingoli={"08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00", "16:00","17:00","18:00","19:00","20:00"};
+        JComboBox<String> comboOraInizio=new JComboBox<>(orariSingoli);
+        JComboBox<String> comboOraFine=new JComboBox<>(orariSingoli);
+        JComboBox<String> comboAule=new JComboBox<>();
         JPanel myPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         myPanel.add(new JLabel("Giorno:"));
         myPanel.add(comboGiorno);
         myPanel.add(new JLabel("Ora Inizio:"));
-        myPanel.add(comboInizio);
+        myPanel.add(comboOraInizio);
         myPanel.add(new JLabel("Ora Fine:"));
-        myPanel.add(comboFine);
+        myPanel.add(comboOraFine);
         int result = JOptionPane.showConfirmDialog(null, myPanel, "Nuovo Vincolo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             String giorno = (String) comboGiorno.getSelectedItem();
-            String inizio = (String) comboInizio.getSelectedItem();
-            String fine = (String) comboFine.getSelectedItem();
+            String inizio = (String) comboOraInizio.getSelectedItem();
+            String fine = (String) comboOraFine.getSelectedItem();
             Vincolo nuovoVincolo = new Vincolo(giorno, inizio, fine);
+            if(comboOraInizio.getSelectedIndex()>= comboOraFine.getSelectedIndex()){
+                JOptionPane.showMessageDialog(this,"Errore: L'ora di fine deve essere successiva all'ora di inizio","ERRORE ORARIO",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (prof.aggiungiVincolo(nuovoVincolo)) {
                 modelloVincoli.addElement(giorno + " " + inizio + " - " + fine);
             } else {
@@ -107,8 +113,8 @@ public class DOCENTE extends JFrame {
         }
 
         JComboBox<String> comboGiorno = new JComboBox<>(new String[]{"Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"});
-        JComboBox<String> comboInizio = new JComboBox<>(new String[]{"08:00", "10:00", "12:00", "14:00", "16:00", "18:00"});
-        JComboBox<String> comboFine = new JComboBox<>(new String[]{"10:00", "12:00", "14:00", "16:00", "18:00", "20:00"});
+        JComboBox<String> comboInizio = new JComboBox<>(new String[]{"08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00", "16:00","17:00","18:00","19:00","20:00"});
+        JComboBox<String> comboFine = new JComboBox<>(new String[]{"08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00", "16:00","17:00","18:00","19:00","20:00"});
         JTextArea txtNota = new JTextArea(4, 30);
         txtNota.setLineWrap(true);
         txtNota.setWrapStyleWord(true);
@@ -158,6 +164,10 @@ public class DOCENTE extends JFrame {
             String fine = (String) comboFine.getSelectedItem();
             model.RichiestaSpostamento nuovaRichiesta = new model.RichiestaSpostamento(null, giorno, inizio, fine);
             controller.aggiungiRichiestaSpostamento(nuovaRichiesta);
+            if(comboInizio.getSelectedIndex()>= comboFine.getSelectedIndex()){
+                JOptionPane.showMessageDialog(this,"Errore: L'ora di fine deve essere successiva all'ora di inizio","ERRORE ORARIO",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             JOptionPane.showMessageDialog(this, "Richiesta inviata con successo al Responsabile!", "Operazione completata", JOptionPane.INFORMATION_MESSAGE);
         }
     }
