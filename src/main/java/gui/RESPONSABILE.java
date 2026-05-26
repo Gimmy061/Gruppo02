@@ -7,14 +7,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
-public class RESPONSABILE extends JFrame{
+public class RESPONSABILE extends JFrame {
 
     private Controller controller;
     private Responsabile responsabile;
     private JPanel panelResponsabile;
     private JButton insegnamentoButton;
     private JButton auleButton;
-    private JButton RIchiesteDiSpostamentoButton;
+    private JButton RichiesteDiSpostamentoButton;
     private JButton conflittiButton;
     private JButton orarioLezioniButton;
     private JButton panoramicaGeneraleButton;
@@ -32,23 +32,34 @@ public class RESPONSABILE extends JFrame{
     private JLabel lblNumRichieste;
     private JTable tabellaInsegnamenti;
     private JButton nuovoInsegnamentoButton;
+    private JButton aggiungiAulaButton;
     private JTable tabellaAule;
+    private JButton eliminaAulaButton;
+    private JButton eliminaInsegnamentoButton;
+    private JButton nuovaLezioneButton;
+    private JButton eliminaLezioneButton;
+    private JTable tabellaOrario;
+    private JPanel panelRichieste;
+    private JTable tabellaConflitti;
+    private JButton accettaRichiestaButton;
+    private JButton rifiutaRichiestaButton;
+    private JTable tabellaRichieste;
 
 
     public RESPONSABILE(Controller controller) {
         this.controller = controller;
-        if(controller.getUtenteLoggato()instanceof Responsabile){
-            this.responsabile=(Responsabile) controller.getUtenteLoggato();
+        if (controller.getUtenteLoggato() instanceof Responsabile) {
+            this.responsabile = (Responsabile) controller.getUtenteLoggato();
         }
         setContentPane(panelResponsabile);
         setTitle("Pannello di Controllo - Responsabile Orari");
-        setSize(1200,800);
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        panoramicaGeneraleButton.addActionListener((ActionEvent e)->{
+        panoramicaGeneraleButton.addActionListener((ActionEvent e) -> {
             cambiaSchermata("CardPanoramica");
         });
-        insegnamentoButton.addActionListener((ActionEvent e)->{
+        insegnamentoButton.addActionListener((ActionEvent e) -> {
             setupTabellaInsegnamenti();
             cambiaSchermata("CardInsegnamenti");
         });
@@ -57,16 +68,63 @@ public class RESPONSABILE extends JFrame{
                 apriPopupNuovoInsegnamento();
             });
         }
-        auleButton.addActionListener((ActionEvent e)->{
+        eliminaInsegnamentoButton.addActionListener(e -> {
+            int rigaSelezionata = tabellaInsegnamenti.getSelectedRow();
+            if (rigaSelezionata == -1) {
+                JOptionPane.showMessageDialog(null, "Seleziona un insegnamento dalla tabella prima di eliminarlo.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+            } else {
+                int risposta = JOptionPane.showConfirmDialog(null, "Vuoi davvero eliminare l'insegnamento selezionato?", "Conferma Eliminazione", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (risposta == JOptionPane.YES_OPTION) {
+                    controller.getInsegnamenti().remove(rigaSelezionata);
+                    setupTabellaInsegnamenti();
+                }
+            }
+        });
+        auleButton.addActionListener((ActionEvent e) -> {
+            setupTabellaAule();
             cambiaSchermata("CardAule");
         });
-        orarioLezioniButton.addActionListener((ActionEvent e)->{
+        aggiungiAulaButton.addActionListener(e -> {
+            apriPopupNuovaAula();
+        });
+        eliminaAulaButton.addActionListener(e -> {
+            int rigaSelezionata = tabellaAule.getSelectedRow();
+            if (rigaSelezionata == -1) {
+                JOptionPane.showMessageDialog(null, "Per favore, seleziona un'aula dalla tabella prima di eliminarla.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+            } else {
+                int risposta = JOptionPane.showConfirmDialog(null, "Vuoi davvero eliminare l'aula selezionata?", "Conferma Eliminazione", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (risposta == JOptionPane.YES_OPTION) {
+                    controller.getAule().remove(rigaSelezionata);
+                    setupTabellaAule();
+                }
+            }
+        });
+        orarioLezioniButton.addActionListener((ActionEvent e) -> {
+            setupTabellaOrario();
             cambiaSchermata("CardOrario");
         });
-        conflittiButton.addActionListener((ActionEvent e) ->{
+        nuovaLezioneButton.addActionListener(e -> {
+            apriPopupNuovaLezione();
+            setupTabellaOrario();
+        });
+        eliminaLezioneButton.addActionListener(e -> {
+            int rigaSelezionata = tabellaOrario.getSelectedRow();
+            if (rigaSelezionata == -1) {
+                JOptionPane.showMessageDialog(null, "Seleziona una lezione dalla tabella prima di eliminarla.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+            } else {
+                int risposta = JOptionPane.showConfirmDialog(null, "Vuoi davvero annullare questa lezione?", "Conferma Eliminazione", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (risposta == JOptionPane.YES_OPTION) {
+                    controller.getTutteLezioni().remove(rigaSelezionata);
+                    setupTabellaOrario();
+                }
+            }
+        });
+        conflittiButton.addActionListener((ActionEvent e) -> {
+            setupTabellaConflitti();
             cambiaSchermata("CardConflitti");
         });
-        RIchiesteDiSpostamentoButton.addActionListener((ActionEvent e)->{
+        RichiesteDiSpostamentoButton.addActionListener((ActionEvent e) -> {
+            setupTabellaRichieste();
             cambiaSchermata("CardRichieste");
         });
         panoramicaGeneraleButton.addActionListener((ActionEvent e) -> {
@@ -74,12 +132,14 @@ public class RESPONSABILE extends JFrame{
             cambiaSchermata("CardPanoramica");
         });
     }
+
     private void cambiaSchermata(String nomeCarta) {
         CardLayout cl = (CardLayout) panelContenitore.getLayout();
         cl.show(panelContenitore, nomeCarta);
     }
-    void aggiornaPanoramica(){
-       if (controller != null && lblNumInsegnamenti != null && lblNumAule != null && lblNumLezioni != null && lblNumConflitti != null && lblNumRichieste != null){
+
+    void aggiornaPanoramica() {
+        if (controller != null && lblNumInsegnamenti != null && lblNumAule != null && lblNumLezioni != null && lblNumConflitti != null && lblNumRichieste != null) {
             lblNumInsegnamenti.setText(String.valueOf(controller.getNumeroInsegnamenti()));
             lblNumAule.setText(String.valueOf(controller.getNumeroAule()));
             lblNumLezioni.setText(String.valueOf(controller.getNumeroLezioni()));
@@ -87,22 +147,24 @@ public class RESPONSABILE extends JFrame{
             lblNumRichieste.setText(String.valueOf(controller.getNumeroRichiesteInAttesa()));
         }
     }
-    private void setupTabellaInsegnamenti(){
-        if(tabellaInsegnamenti !=null){
-            String[] colonne ={
-                    "INìnsegnamento","CFU","Anno","Docente Titolare"
+
+    private void setupTabellaInsegnamenti() {
+        if (tabellaInsegnamenti != null) {
+            String[] colonne = {
+                    "Insegnamento", "CFU", "Anno", "Docente Titolare"
             };
-            javax.swing.table.DefaultTableModel model=new javax.swing.table.DefaultTableModel(colonne, 0);
-            for(model.Insegnamento ins:controller.getInsegnamenti()){
-                String nomeDocente=ins.getDocente().getCognome()+" "+ins.getDocente().getNome();
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(colonne, 0);
+            for (model.Insegnamento ins : controller.getInsegnamenti()) {
+                String nomeDocente = ins.getDocente().getCognome() + " " + ins.getDocente().getNome();
                 model.addRow(new Object[]{
-                        ins.getNome(), ins.getCFU(), ins.getAnnoCorso(), "Prof. "+nomeDocente
+                        ins.getNome(), ins.getCFU(), ins.getAnnoCorso(), "Prof. " + nomeDocente
                 });
             }
             tabellaInsegnamenti.setModel(model);
             tabellaInsegnamenti.setRowHeight(30);
         }
     }
+
     private void apriPopupNuovoInsegnamento() {
         JTextField txtNome = new JTextField();
         JComboBox<Integer> comboCFU = new JComboBox<>(new Integer[]{3, 6, 9, 12});
@@ -121,14 +183,14 @@ public class RESPONSABILE extends JFrame{
         panel.add(comboAnno);
         panel.add(new JLabel("Docente Titolare: "));
         panel.add(comboDocenti);
-        int result=JOptionPane.showConfirmDialog(this,panel,"Nuovo Insegnamento", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(this, panel, "Nuovo Insegnamento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             String nome = txtNome.getText();
             int cfu = (Integer) comboCFU.getSelectedItem();
             int anno = (Integer) comboAnno.getSelectedItem();
 
             if (nome.trim().isEmpty() || listaDocenti == null || listaDocenti.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Non Hai inserito i dati ", "Errore", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Non hai inserito i dati ", "Errore", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             model.Docente docenteScelto = listaDocenti.get(comboDocenti.getSelectedIndex());
@@ -139,13 +201,14 @@ public class RESPONSABILE extends JFrame{
             JOptionPane.showMessageDialog(this, "Insegnamento aggiunto con successo!", "Completato", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    private void setupTabellaAule(){
-        if(tabellaAule!=null){
-            String[] colonne={
-                    "Aula"
+
+    private void setupTabellaAule() {
+        if (tabellaAule != null) {
+            String[] colonne = {
+                    "Nome Aula"
             };
-            javax.swing.table.DefaultTableModel model=new javax.swing.table.DefaultTableModel(colonne,0);
-            for (model.Aula a:controller.getAule()){
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(colonne, 0);
+            for (model.Aula a : controller.getAule()) {
                 model.addRow(new Object[]{
                         a.getNome()
                 });
@@ -154,6 +217,7 @@ public class RESPONSABILE extends JFrame{
             tabellaAule.setRowHeight(30);
         }
     }
+
     private void apriPopupNuovaAula() {
         JTextField txtNome = new JTextField();
         JPanel panel = new JPanel(new GridLayout(2, 2, 10, 10));
@@ -168,28 +232,32 @@ public class RESPONSABILE extends JFrame{
             model.Aula nuovaAula = new model.Aula(nome);
             controller.aggiungiAula(nuovaAula);
             setupTabellaAule();
-            JOptionPane.showMessageDialog(this,"Aula aggiunta con successo","Completato",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Aula aggiunta con successo", "Completato", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    private void apriPopupNuovaLezione(){
-        java.util.ArrayList<model.Insegnamento> listaInsegnamenti=controller.getInsegnamenti();
-        java.util.ArrayList<model.Aula>listaAule=controller.getAule();
-        if(listaInsegnamenti==null|| listaInsegnamenti.isEmpty()||listaAule==null|| listaAule.isEmpty()){
-            JOptionPane.showMessageDialog(this,"Prima di creare una lezione devi aver almeno un Insegnamento e un Aula","ERRORE",JOptionPane.ERROR_MESSAGE);
+
+    private void apriPopupNuovaLezione() {
+        java.util.ArrayList<model.Insegnamento> listaInsegnamenti = controller.getInsegnamenti();
+        java.util.ArrayList<model.Aula> listaAule = controller.getAule();
+        if (listaInsegnamenti == null || listaInsegnamenti.isEmpty() || listaAule == null || listaAule.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Prima di creare una lezione devi aver almeno un Insegnamento e un Aula", "ERRORE", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        JComboBox<String>comboInsegnamenti=new JComboBox<>();
-        for (model.Insegnamento ins:listaInsegnamenti){
-            comboInsegnamenti.addItem(ins.getNome()+"(Prof. "+ins.getDocente().getCognome()+")");
+        JComboBox<String> comboInsegnamenti = new JComboBox<>();
+        for (model.Insegnamento ins : listaInsegnamenti) {
+            comboInsegnamenti.addItem(ins.getNome() + "(Prof. " + ins.getDocente().getCognome() + ")");
         }
-        JComboBox<String>comboGiorno=new JComboBox<>(controller.getGiorniSettimana());
-        String[]orariSingoli={"08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00", "16:00","17:00","18:00","19:00","20:00"};
-        JComboBox<String> comboOraInizio=new JComboBox<>(orariSingoli);
-        JComboBox<String> comboOraFine=new JComboBox<>(orariSingoli);
-        JComboBox<String> comboAule=new JComboBox<>();
-        for(model.Aula a:listaAule){
+        JComboBox<String> comboGiorno = new JComboBox<>(controller.getGiorniSettimana());
+        String[] orariSingoli = {
+                "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"
+        };
+        JComboBox<String> comboOraInizio = new JComboBox<>(orariSingoli);
+        JComboBox<String> comboOraFine = new JComboBox<>(orariSingoli);
+        JComboBox<String> comboAule = new JComboBox<>();
+        for (model.Aula a : listaAule) {
             comboAule.addItem(a.getNome());
         }
-        JPanel panel =new JPanel(new GridLayout(5,2,10,10));
+        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
         panel.add(new JLabel("Insegnamento: "));
         panel.add(comboInsegnamenti);
         panel.add(new JLabel("Giorno:"));
@@ -200,20 +268,74 @@ public class RESPONSABILE extends JFrame{
         panel.add(comboOraFine);
         panel.add(new JLabel("Aula: "));
         panel.add(comboAule);
-        int result=JOptionPane.showConfirmDialog(this,panel,"Nuova Lezione", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result==JOptionPane.OK_OPTION){
-            if(comboOraInizio.getSelectedIndex()>= comboOraFine.getSelectedIndex()){
-                JOptionPane.showMessageDialog(this,"Errore: L'ora di fine essere successiva all'ora di inizio","ERRORE ORARIO",JOptionPane.ERROR_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(this, panel, "Nuova Lezione", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            if (comboOraInizio.getSelectedIndex() >= comboOraFine.getSelectedIndex()) {
+                JOptionPane.showMessageDialog(this, "Errore: L'ora di fine essere successiva all'ora di inizio", "ERRORE ORARIO", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
-        model.Insegnamento insegnamentoScelto=listaInsegnamenti.get(comboInsegnamenti.getSelectedIndex());
-        String giornoScelto=(String) comboGiorno.getSelectedItem();
-        String oraInizio=(String) comboOraInizio.getSelectedItem();
-        String oraFine=(String) comboOraFine.getSelectedItem();
-        model.Aula aulaScelta=listaAule.get(comboAule.getSelectedIndex());
-        model.Lezione nuovaLezione=new model.Lezione(insegnamentoScelto, giornoScelto,oraInizio,oraFine,aulaScelta);
+        model.Insegnamento insegnamentoScelto = listaInsegnamenti.get(comboInsegnamenti.getSelectedIndex());
+        String giornoScelto = (String) comboGiorno.getSelectedItem();
+        String oraInizio = (String) comboOraInizio.getSelectedItem();
+        String oraFine = (String) comboOraFine.getSelectedItem();
+        model.Aula aulaScelta = listaAule.get(comboAule.getSelectedIndex());
+        model.Lezione nuovaLezione = new model.Lezione(insegnamentoScelto, giornoScelto, oraInizio, oraFine, aulaScelta);
         controller.getTutteLezioni().add(nuovaLezione);
-        JOptionPane.showMessageDialog(this,"Lezione creataa con successo","Completato",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Lezione creata con successo", "Completato", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void setupTabellaOrario() {
+        if (tabellaOrario != null) {
+            String[] colonne = {
+                    "Insegnamento", "Docente", "Giorno", "Ora Inizio", "Ora Fine", "Aula"
+            };
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(colonne, 0);
+            for (model.Lezione lezione : controller.getTutteLezioni()) {
+                String nomeInsegnamento = lezione.getInsegnamento().getNome();
+                String prof = "Prof. " + lezione.getInsegnamento().getDocente().getCognome();
+                String giorno = lezione.getGiornoSettimana();
+                String inizio = lezione.getOrainizio();
+                String fine = lezione.getOrafine();
+                String aula = lezione.getAula().getNome();
+                model.addRow(new Object[]{nomeInsegnamento, prof, giorno, inizio, fine, aula});
+            }
+            tabellaOrario.setModel(model);
+            tabellaOrario.setRowHeight(30);
+        }
+    }
+
+    private void setupTabellaConflitti() {
+        if (tabellaConflitti != null) {
+            String[] colonne = {
+                    "Dettaglio Conflitto Rilevato"
+            };
+            javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(colonne, 0);
+            for (String errore : controller.rilevaConflitti()) {
+                model.addRow(new Object[]{ errore });
+            }
+            tabellaConflitti.setModel(model);
+            tabellaConflitti.setRowHeight(35);
+        }
+    }
+    private void setupTabellaRichieste() {
+        if (tabellaRichieste != null) {
+            String[] colonne = {
+                    "Docente", "Lezione Originale", "Nuovo Orario Proposto", "Motivazione"
+            };
+                    javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(colonne, 0);
+            for (model.RichiestaSpostamento req : controller.getRichiesteSpostamento()) {
+                String docente = "Prof. " + req.getLezionedaSpostare().getInsegnamento().getDocente().getCognome();
+                String vecchiaLezione = req.getLezionedaSpostare().getGiornoSettimana() + " " + req.getLezionedaSpostare().getOrainizio();
+                String nuovaLezione = req.getNuovoGiornoLezione() + " " + req.getNuovaOraInizio();
+                String motivazione = req.getMotivazione();
+                if (motivazione == null || motivazione.trim().isEmpty()) {
+                    motivazione = "Nessuna nota";
+                }
+                model.addRow(new Object[]{docente, vecchiaLezione, nuovaLezione, motivazione});
+            }
+            tabellaRichieste.setModel(model);
+            tabellaRichieste.setRowHeight(35);
+        }
     }
 }

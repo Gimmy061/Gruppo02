@@ -159,15 +159,18 @@ public class DOCENTE extends JFrame {
                 bottoni[0]
         );
         if (result == 0) {
+            Object elementoSelezionato = comboLezione.getSelectedItem();
+            if (elementoSelezionato == null || elementoSelezionato instanceof String) {
+                JOptionPane.showMessageDialog(this, "Per favore, seleziona una lezione valida da spostare.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             String giorno = (String) comboGiorno.getSelectedItem();
             String inizio = (String) comboInizio.getSelectedItem();
             String fine = (String) comboFine.getSelectedItem();
-            model.RichiestaSpostamento nuovaRichiesta = new model.RichiestaSpostamento(null, giorno, inizio, fine);
+            model.Lezione lezioneSelezionata = (model.Lezione) elementoSelezionato;
+            String nota = txtNota.getText();
+            model.RichiestaSpostamento nuovaRichiesta = new model.RichiestaSpostamento(lezioneSelezionata, giorno, inizio, fine, nota);
             controller.aggiungiRichiestaSpostamento(nuovaRichiesta);
-            if(comboInizio.getSelectedIndex()>= comboFine.getSelectedIndex()){
-                JOptionPane.showMessageDialog(this,"Errore: L'ora di fine deve essere successiva all'ora di inizio","ERRORE ORARIO",JOptionPane.ERROR_MESSAGE);
-                return;
-            }
             JOptionPane.showMessageDialog(this, "Richiesta inviata con successo al Responsabile!", "Operazione completata", JOptionPane.INFORMATION_MESSAGE);
         }
     }
