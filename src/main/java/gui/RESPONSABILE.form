@@ -1,13 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.RESPONSABILE">
-  <grid id="27dc6" row-count="1" column-count="1" layout-manager="GridLayoutManager">
+  <grid id="27dc6" binding="panelResponsabile" custom-create="true" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
-      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+      <xy x="241" y="46" width="442" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
-    <children/>
+    <children>
+      <component id="4d48f" class="javax.swing.JButton" binding="insegnamentoButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="0" row-span="5" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="insegnamento"/>
+        </properties>
+      </component>
+      <component id="6a1cc" class="javax.swing.JButton" binding="auleButton" default-binding="true">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Aule"/>
+        </properties>
+      </component>
+      <component id="3174f" class="javax.swing.JButton" binding="RIchiesteDiSpostamentoButton" default-binding="true">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="RIchieste di Spostamento"/>
+        </properties>
+      </component>
+      <component id="e4889" class="javax.swing.JButton" binding="conflittiButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Conflitti"/>
+        </properties>
+      </component>
+      <component id="27fcd" class="javax.swing.JButton" binding="orarioLezioniButton" default-binding="true">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Orario Lezioni"/>
+        </properties>
+      </component>
+      <component id="26cee" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Panoramica generale RESPONSABILE"/>
+        </properties>
+      </component>
+      <component id="4ae76" class="javax.swing.JButton" binding="panoramicaGeneraleButton" default-binding="true">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12763843"/>
+          <text value="Panoramica generale"/>
+        </properties>
+      </component>
+      <grid id="603a9" binding="panelContenitore" layout-manager="CardLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="1" column="1" row-span="9" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="8272c" binding="panelPanoramica" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <card name="CardPanoramica"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="3b349" binding="panelInsegnamenti" layout-manager="CardLayout" hgap="0" vgap="0">
+                <constraints>
+                  <card name="CardInsegnamenti"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="7daef" binding="panelAule" layout-manager="CardLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <card name="CardAule"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <grid id="f6b3b" binding="panelOrario" layout-manager="CardLayout" hgap="0" vgap="0">
+                        <constraints>
+                          <card name="CardOrario"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="6fd32" binding="panelConflitti" layout-manager="CardLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <card name="CardConflitti"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <grid id="5013a" binding="panelRichieste" layout-manager="CardLayout" hgap="0" vgap="0">
+                                <constraints>
+                                  <card name="CardRichieste"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children/>
+                              </grid>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
   </grid>
 </form>

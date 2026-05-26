@@ -18,6 +18,7 @@ public class DOCENTE extends JFrame {
     private JButton aggiungiVincoloButton;
     private JList<String> listavincoli;
     private DefaultListModel<String> modelloVincoli;
+    private JButton rimuoviVincoloButton;
 
     public DOCENTE(Controller controller) {
         this.controller = controller;
@@ -40,6 +41,16 @@ public class DOCENTE extends JFrame {
         });
         richiediSpostamentoLezioniButton.addActionListener((ActionEvent e) -> {
             apriPopupRichiestaSpostamento();
+        });
+        rimuoviVincoloButton.addActionListener((ActionEvent e) -> {
+            int indiceSelezionato = listavincoli.getSelectedIndex();
+            if (indiceSelezionato != -1) {
+                model.Vincolo vDaRimuovere = prof.getVincoli().get(indiceSelezionato);
+                prof.rimuoviVincolo(vDaRimuovere);
+                modelloVincoli.remove(indiceSelezionato);
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleziona prima un vincolo dalla lista per rimuoverlo.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+            }
         });
     }
     private void setupTabellaOrario() {
