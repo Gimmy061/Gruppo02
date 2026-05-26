@@ -70,6 +70,7 @@ public class RESPONSABILE extends JFrame{
             cambiaSchermata("CardRichieste");
         });
         panoramicaGeneraleButton.addActionListener((ActionEvent e) -> {
+            aggiornaPanoramica();
             cambiaSchermata("CardPanoramica");
         });
     }
@@ -78,7 +79,7 @@ public class RESPONSABILE extends JFrame{
         cl.show(panelContenitore, nomeCarta);
     }
     void aggiornaPanoramica(){
-       if (lblNumInsegnamenti != null){
+       if (controller != null && lblNumInsegnamenti != null && lblNumAule != null && lblNumLezioni != null && lblNumConflitti != null && lblNumRichieste != null){
             lblNumInsegnamenti.setText(String.valueOf(controller.getNumeroInsegnamenti()));
             lblNumAule.setText(String.valueOf(controller.getNumeroAule()));
             lblNumLezioni.setText(String.valueOf(controller.getNumeroLezioni()));
