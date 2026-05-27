@@ -8,7 +8,7 @@ import model.Studente;
 import model.Utente;
 
 public class Home extends JFrame {
-    private Controller controller;
+    private controller.Controller controller;
     private JPanel panelHome;
     private JTextField textField2; // Immagino sia per l'email
     private JPasswordField passwordField1;
@@ -16,8 +16,8 @@ public class Home extends JFrame {
     private JPanel panelHome0;
     private JTextField accediConLeTueTextField;
 
-    public Home() {
-        this.controller = new Controller();
+    public Home(Controller controller) {
+        this.controller = controller;
         this.setContentPane(panelHome);
         this.setTitle("ACCESSO");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,11 +61,13 @@ public class Home extends JFrame {
             }
         });
     }
-
-
     public static void main(String[] args) {
-        Controller c= new Controller();
-        Home schermataHome = new Home();
-        schermataHome.setVisible(true);
+        controller.Controller controllerGenerale = new controller.Controller();
+
+        SwingUtilities.invokeLater(() -> {
+            gui.Home schermataIniziale = new gui.Home(controllerGenerale);
+            schermataIniziale.setVisible(true);
+        });
     }
+
 }

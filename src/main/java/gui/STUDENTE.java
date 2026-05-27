@@ -3,21 +3,32 @@ package gui;
 import javax.swing.*;
 import controller.Controller;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 
 public class STUDENTE extends JFrame{
     private Controller controller;
     private model.Studente studenteLoggato;
     private JTable tabellaOrario;
     private JScrollPane scrollPane1;
+    private JButton logoutButton;
+    private JPanel panel1;
+    private JPanel panelStudente;
+
     public STUDENTE(Controller controller, model.Studente studenteLoggato) {
         this.controller = controller;
-        setContentPane(scrollPane1);
+        setContentPane(panelStudente);
         setTitle("Orario Studente - "+studenteLoggato.getAnnoCorso()+"° Anno");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setupTabellaOrario();
+        logoutButton.addActionListener(e -> {
+            int scelta = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler uscire dal tuo account?", "Conferma Logout", JOptionPane.YES_NO_OPTION);
+            if (scelta == JOptionPane.YES_OPTION) {
+                this.dispose();
+                gui.Home schermataLogin = new gui.Home(this.controller);
+                schermataLogin.setVisible(true);
+            }
+        });
     }
     private void setupTabellaOrario() {
         String[] colonne = {"Orario", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"};

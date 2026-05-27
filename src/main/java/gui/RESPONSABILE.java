@@ -44,6 +44,7 @@ public class RESPONSABILE extends JFrame {
     private JButton accettaRichiestaButton;
     private JButton rifiutaRichiestaButton;
     private JTable tabellaRichieste;
+    private JButton btnLogout;
 
 
     public RESPONSABILE(Controller controller) {
@@ -52,6 +53,7 @@ public class RESPONSABILE extends JFrame {
             this.responsabile = (Responsabile) controller.getUtenteLoggato();
         }
         setContentPane(panelResponsabile);
+        this.setContentPane(panelResponsabile);
         setTitle("Pannello di Controllo - Responsabile Orari");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -161,6 +163,15 @@ public class RESPONSABILE extends JFrame {
             if (scelta == JOptionPane.YES_OPTION) {
                 controller.eliminaRichiesta(rigaSelezionata);
                 setupTabellaRichieste();
+            }
+        });
+        btnLogout.addActionListener(e -> {
+            int scelta = JOptionPane.showConfirmDialog(this, "Vuoi davvero uscire?", "Conferma Logout", JOptionPane.YES_NO_OPTION);
+
+            if (scelta == JOptionPane.YES_OPTION) {
+                this.dispose();
+                gui.Home schermataLogin = new gui.Home(this.controller);
+                schermataLogin.setVisible(true);
             }
         });
     }

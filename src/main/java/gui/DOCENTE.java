@@ -19,6 +19,7 @@ public class DOCENTE extends JFrame {
     private JList<String> listavincoli;
     private DefaultListModel<String> modelloVincoli;
     private JButton rimuoviVincoloButton;
+    private JButton btnLogout;
 
     public DOCENTE(Controller controller) {
         this.controller = controller;
@@ -36,6 +37,7 @@ public class DOCENTE extends JFrame {
         setLocationRelativeTo(null);
         setupTabellaOrario();
         setupListaVincoli();
+        this.setContentPane(panelDocente);
         aggiungiVincoloButton.addActionListener((ActionEvent e) -> {
             apriPopupAggiungiVincolo();
         });
@@ -50,6 +52,15 @@ public class DOCENTE extends JFrame {
                 modelloVincoli.remove(indiceSelezionato);
             } else {
                 JOptionPane.showMessageDialog(this, "Seleziona prima un vincolo dalla lista per rimuoverlo.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+        btnLogout.addActionListener(e -> {
+            int scelta = JOptionPane.showConfirmDialog(this, "Vuoi davvero uscire?", "Conferma Logout", JOptionPane.YES_NO_OPTION);
+
+            if (scelta == JOptionPane.YES_OPTION) {
+                this.dispose();
+                gui.Home schermataLogin = new gui.Home(this.controller);
+                schermataLogin.setVisible(true);
             }
         });
     }
