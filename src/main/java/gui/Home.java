@@ -38,7 +38,7 @@ public class Home extends JFrame {
                 if (utenteLoggato instanceof Studente) {
 
 
-                    STUDENTE schermataStudente = new STUDENTE(controller);
+                    STUDENTE schermataStudente = new STUDENTE(controller, (model.Studente) utenteLoggato);
                     schermataStudente.setVisible(true);
 
                     this.dispose();

@@ -127,9 +127,41 @@ public class RESPONSABILE extends JFrame {
             setupTabellaRichieste();
             cambiaSchermata("CardRichieste");
         });
+
         panoramicaGeneraleButton.addActionListener((ActionEvent e) -> {
             aggiornaPanoramica();
             cambiaSchermata("CardPanoramica");
+        });
+
+        accettaRichiestaButton.addActionListener(e -> {
+            int rigaSelezionata = tabellaRichieste.getSelectedRow();
+            if (rigaSelezionata == -1) {
+                JOptionPane.showMessageDialog(this, "Per favore, seleziona una richiesta dalla tabella.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int scelta = JOptionPane.showConfirmDialog(this, "Vuoi approvare questo spostamento e aggiornare l'orario?", "Conferma", JOptionPane.YES_NO_OPTION);
+            if (scelta == JOptionPane.YES_OPTION) {
+                String esito = controller.accettaRichiesta(rigaSelezionata);
+                if(esito.equals("OK")) {
+                    setupTabellaRichieste();
+                    JOptionPane.showMessageDialog(this, "Richiesta approvata con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                }else {
+                    JOptionPane.showMessageDialog(this, esito, "ERRORE DI VINCOLO / CONFLITTO", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        rifiutaRichiestaButton.addActionListener(e -> {
+            int rigaSelezionata=tabellaRichieste.getSelectedRow();
+            if(rigaSelezionata==-1){
+                JOptionPane.showMessageDialog(this, "Per favore, seleziona una richiesta dalla tabella.", "Attenzione", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int scelta = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler rifiutare ed eliminare questa richiesta?", "Elimina", JOptionPane.YES_NO_OPTION);
+
+            if (scelta == JOptionPane.YES_OPTION) {
+                controller.eliminaRichiesta(rigaSelezionata);
+                setupTabellaRichieste();
+            }
         });
     }
 

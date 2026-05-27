@@ -16,7 +16,13 @@ public class Controller {
 	private Utente utenteLoggato = null;
 	private ArrayList<RichiestaSpostamento> richiesteSpostamento = new ArrayList<>();
 
+	public void registraStudente(model.Studente studente) {
+		studenti.add(studente);
+	}
 
+	public void registraDocente(model.Docente docente) {
+		docenti.add(docente);
+	}
 	public boolean effettuaLogin(String email, String password) {
 		for (Responsabile r : responsabili) {
 			if (r.login(email, password)) {
@@ -135,5 +141,45 @@ public class Controller {
 		return new String[]{
 				"Lunedi","Martedi","Mercoledi","Giovedi","Venerdi"
 		};
+	}
+	public void eliminaRichiesta(int indice) {
+		richiesteSpostamento.remove(indice);
+	}
+	public String accettaRichiesta(int indice) {
+		RichiestaSpostamento req = richiesteSpostamento.get(indice);
+		Lezione lezione = req.getLezionedaSpostare();
+		String nuovaOraFine = req.getNuovaOraFine();
+		String nuovoGiorno = req.getNuovoGiornoLezione();
+		String nuovaOraInizio = req.getNuovaOraInizio();
+		Docente docente = lezione.getInsegnamento().getDocente();
+		Aula aula = lezione.getAula();
+		for(Vincolo v:docente.getVincoli()){
+			if(v.getVincoloGiornoSettimana().equalsIgnoreCase(nuovoGiorno)){
+				if (isSovrapposto(nuovaOraInizio, nuovaOraFine, v.getVincoloOraInizio(), v.getVincoloOraFine())) {
+					return "Impossibile approvare: il " + nuovoGiorno + " dalle " + nuovaOraInizio + " alle " + nuovaOraFine + " viola un vincolo di indisponibilità del Prof. " + docente.getCognome() + ".";
+				}
+			}
+		}
+		for (Lezione altraLezione : lezioni) {
+			if (altraLezione == lezione) continue;
+			if (altraLezione.getGiornoSettimana().equalsIgnoreCase(nuovoGiorno)) {
+				if (isSovrapposto(nuovaOraInizio, nuovaOraFine, altraLezione.getOrainizio(), altraLezione.getOrafine())) {
+					if (altraLezione.getAula().getNome().equalsIgnoreCase(aula.getNome())) {
+						return "Impossibile approvare: l'aula " + aula.getNome() + " è già occupata da un'altra lezione (" + altraLezione.getInsegnamento().getNome() + ").";
+					}
+					if (altraLezione.getInsegnamento().getDocente().getCognome().equalsIgnoreCase(docente.getCognome())) {
+						return "Impossibile approvare: il Prof. " + docente.getCognome() + " ha già un'altra lezione in contemporanea (" + altraLezione.getInsegnamento().getNome() + ").";
+					}
+				}
+			}
+		}
+		lezione.setGiornoSettimana(nuovoGiorno);
+		lezione.setOrainizio(nuovaOraInizio);
+		lezione.setOrafine(nuovaOraFine);
+		richiesteSpostamento.remove(indice);
+		return "OK";
+	}
+	private boolean isSovrapposto(String inizio1, String fine1, String inizio2, String fine2) {
+		return inizio1.compareTo(fine2) < 0 && fine1.compareTo(inizio2) > 0;
 	}
 }
