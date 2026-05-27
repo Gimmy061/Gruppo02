@@ -10,7 +10,7 @@ import model.Utente;
 public class Home extends JFrame {
     private controller.Controller controller;
     private JPanel panelHome;
-    private JTextField textField2; // Immagino sia per l'email
+    private JTextField textField2;
     private JPasswordField passwordField1;
     private JButton loginButton;
     private JPanel panelHome0;
@@ -25,42 +25,34 @@ public class Home extends JFrame {
         this.setSize(400, 300);
 
         loginButton.addActionListener(e -> {
-
-            String email = this.textField2.getText(); // Sostituisci con textArea1 se serve
+            String email = this.textField2.getText();
             String password = String.valueOf(this.passwordField1.getPassword());
 
-
             if (controller.effettuaLogin(email, password)) {
-
-
                 Utente utenteLoggato = controller.getUtenteLoggato();
 
                 if (utenteLoggato instanceof Studente) {
-
-
                     STUDENTE schermataStudente = new STUDENTE(controller, (model.Studente) utenteLoggato);
                     schermataStudente.setVisible(true);
-
                     this.dispose();
 
                 } else if(utenteLoggato instanceof Responsabile){
-                    RESPONSABILE schermataRESPONSABILE= new RESPONSABILE(controller);
+                    RESPONSABILE schermataRESPONSABILE = new RESPONSABILE(controller);
                     schermataRESPONSABILE.setVisible(true);
-
                     this.dispose();
-                } else if (utenteLoggato instanceof Docente) {
-                    DOCENTE schermataDOCENTE = new DOCENTE(controller);
-                    schermataDOCENTE.setVisible(true);
 
+                } else if (utenteLoggato instanceof Docente) {
+                    DOCENTE schermataDOCENTE = new DOCENTE(controller, (model.Docente) utenteLoggato);
+                    schermataDOCENTE.setVisible(true);
                     this.dispose();
                 }
 
             } else {
-                // 5. Se il controller restituisce false, le credenziali sono errate
                 JOptionPane.showMessageDialog(this, "Email o password errati!", "Errore Login", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
+
     public static void main(String[] args) {
         controller.Controller controllerGenerale = new controller.Controller();
 
@@ -69,5 +61,4 @@ public class Home extends JFrame {
             schermataIniziale.setVisible(true);
         });
     }
-
 }
