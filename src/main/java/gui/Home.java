@@ -15,6 +15,7 @@ public class Home extends JFrame {
     private JButton loginButton;
     private JPanel panelHome0;
     private JTextField accediConLeTueTextField;
+    private JButton btnVaiARegistrazione;
 
     public Home(Controller controller) {
         this.controller = controller;
@@ -50,6 +51,11 @@ public class Home extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Email o password errati!", "Errore Login", JOptionPane.ERROR_MESSAGE);
             }
+        });
+        btnVaiARegistrazione.addActionListener(e -> {
+            gui.REGISTRAZIONE schermataRegistrazione = new gui.REGISTRAZIONE(this.controller);
+            schermataRegistrazione.setVisible(true);
+            this.dispose();
         });
     }
 

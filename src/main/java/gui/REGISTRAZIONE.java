@@ -74,6 +74,9 @@ public class REGISTRAZIONE extends javax.swing.JFrame {
                 controller.registraDocente(nuovoDocente);
                 JOptionPane.showMessageDialog(null, "Docente registrato con successo!\nMateria: " + materia, "Benvenuto", JOptionPane.INFORMATION_MESSAGE);
             }
+            this.dispose();
+            gui.Home schermataLogin = new gui.Home(this.controller);
+            schermataLogin.setVisible(true);
         });
     }
 
